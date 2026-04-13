@@ -1,0 +1,84 @@
+/* ========== RESPONSIVE STYLES ========== */
+
+@media (max-width: 1200px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .about-content,
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .about-image {
+        order: -1;
+    }
+    .nav-links {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    /* Nav-links ve nav-right birlikte tek panel olarak açılır */
+    .nav-links {
+        position: fixed;
+        top: 0; left: -100%;
+        width: 80%; height: 100vh;
+        background: var(--darker);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        padding-bottom: 6rem; /* nav-right için alan bırak */
+    }
+    .nav-links.active {
+        left: 0;
+    }
+
+    /* nav-right, açık panelin altına yerleşir */
+    .nav-right {
+        position: fixed;
+        top: auto;
+        bottom: 0; left: -100%;
+        width: 80%;
+        background: var(--darker);
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.25rem 1rem;
+        transition: left 0.3s ease;
+        z-index: 1001;
+        border-top: 1px solid rgba(108, 92, 231, 0.2);
+    }
+    .nav-right.active {
+        left: 0;
+    }
+    .hero h1       { font-size: 2.5rem; }
+    .hero .subtitle { font-size: 1.2rem; }
+    .page-header h1 { font-size: 2rem; }
+    .projects-grid,
+    .blog-grid      { grid-template-columns: 1fr; }
+    .auth-container { padding: 1rem; }
+    .auth-box       { padding: 2rem 1.5rem; }
+    .dropdown-menu  { right: auto; left: 0; }
+}
+
+@media (max-width: 480px) {
+    .hero h1        { font-size: 2rem; }
+    .navbar         { padding: 1rem; }
+    .nav-right      { flex-direction: column; gap: 0.5rem; }
+    .btn            { padding: 0.5rem 1rem; font-size: 0.85rem; }
+    .kullanici-menu { width: 100%; }
+    .dropdown-menu  { width: 100%; }
+}
