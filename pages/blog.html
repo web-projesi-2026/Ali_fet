@@ -4,20 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Ali Fet</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .filter-bar {
+            max-width: 1200px;
+            margin: 2rem auto 1.5rem;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        .search-box { flex: 1; min-width: 220px; position: relative; }
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.8rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        .search-box input::placeholder { opacity: 0.45; }
+        .search-box i { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); opacity: 0.45; pointer-events: none; }
+
+        .filter-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-cats button {
+            padding: 0.45rem 1.15rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: transparent;
+            color: var(--light);
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.22s;
+        }
+        .filter-cats button:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-cats button.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        .result-count {
+            max-width: 1200px; margin: 0 auto 0.5rem; padding: 0 2rem;
+            font-size: 0.88rem; opacity: 0.5;
+        }
+
+        .empty-state {
+            text-align: center; padding: 4rem 2rem; opacity: 0.55;
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        .kat-badge {
+            font-size: 0.75rem;
+            background: rgba(108,92,231,0.2);
+            color: var(--primary);
+            padding: 0.18rem 0.65rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="preloader">
-        <div class="loader"></div>
-    </div>
-    
+    <div class="preloader"><div class="loader"></div></div>
     <div class="particles"></div>
-    
+
     <nav class="navbar">
         <a href="../index.html" class="logo">Ali Fet</a>
-        
         <ul class="nav-links">
             <li><a href="../index.html">Anasayfa</a></li>
             <li><a href="hakkimda.html">Hakkımda</a></li>
@@ -25,117 +81,45 @@
             <li><a href="blog.html" class="active">Blog</a></li>
             <li><a href="iletisim.html">İletişim</a></li>
         </ul>
-        
         <div class="nav-right">
             <a href="giris.html" class="btn btn-outline">Giriş Yap</a>
             <a href="kayit.html" class="btn btn-primary">Kayıt Ol</a>
             <a href="iletisim.html" class="btn btn-secondary">İletişime Geç</a>
         </div>
-        
-        <div class="mobile-menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
     </nav>
-    
+
     <header class="page-header">
         <h1>Blog</h1>
         <p>Yazılım dünyasından notlar ve deneyimlerim</p>
     </header>
-    
-    <div class="blog-grid">
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
-                <i class="fas fa-react"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 15 Ocak 2024</span>
-                    <span><i class="far fa-clock"></i> 5 dk okuma</span>
-                </div>
-                <h3>React Hooks: useState ve useEffect Rehberi</h3>
-                <p>React'ın en önemli hook'larını detaylı örneklerle öğrenin. Fonksiyonel componentlerde state yönetimi...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
-        
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #00cec9, #81ecec);">
-                <i class="fas fa-database"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 10 Ocak 2024</span>
-                    <span><i class="far fa-clock"></i> 8 dk okuma</span>
-                </div>
-                <h3>MongoDB vs PostgreSQL: Hangisini Seçmeli?</h3>
-                <p>NoSQL ve SQL veritabanlarının karşılaştırması. Proje gereksinimlerinize göre doğru veritabanı seçimi...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
-        
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #fd79a8, #fab1a0);">
-                <i class="fas fa-code-branch"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 5 Ocak 2024</span>
-                    <span><i class="far fa-clock"></i> 6 dk okuma</span>
-                </div>
-                <h3>Git ile Etkili Versiyon Kontrolü</h3>
-                <p>Branch stratejileri, merge conflict çözümü ve ekip çalışması için Git best practice'leri...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
-        
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #fdcb6e, #f39c12);">
-                <i class="fab fa-js-square"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 28 Aralık 2023</span>
-                    <span><i class="far fa-clock"></i> 7 dk okuma</span>
-                </div>
-                <h3>Modern JavaScript: ES6+ Özellikleri</h3>
-                <p>Arrow functions, destructuring, spread operator ve async/await gibi modern JS özelliklerini keşfedin...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
-        
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
-                <i class="fas fa-server"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 20 Aralık 2023</span>
-                    <span><i class="far fa-clock"></i> 10 dk okuma</span>
-                </div>
-                <h3>RESTful API Tasarım Prensipleri</h3>
-                <p>Temiz, ölçeklenebilir ve kullanımı kolay API'ler tasarlamak için izlenmesi gereken kurallar...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
-        
-        <article class="blog-card">
-            <div class="blog-image" style="background: linear-gradient(135deg, #55efc4, #00b894);">
-                <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <span><i class="far fa-calendar"></i> 15 Aralık 2023</span>
-                    <span><i class="far fa-clock"></i> 5 dk okuma</span>
-                </div>
-                <h3>Responsive Design: Mobile-First Yaklaşımı</h3>
-                <p>Mobil öncelikli tasarım stratejileri, media queries ve flexbox/grid kullanımı...</p>
-                <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </article>
+
+    <!-- Filtre Araç Çubuğu -->
+    <div class="filter-bar">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="blogArama" placeholder="Yazı ara... (başlık veya konu)">
+        </div>
+        <div class="filter-cats" id="blogKategori">
+            <button class="active" data-kat="tumu">Tümü</button>
+            <button data-kat="javascript">JavaScript</button>
+            <button data-kat="backend">Backend</button>
+            <button data-kat="veritabani">Veritabanı</button>
+            <button data-kat="araclar">Araçlar</button>
+            <button data-kat="tasarim">Tasarım</button>
+        </div>
     </div>
-    
+
+    <div class="result-count" id="blogSonuc"></div>
+
+    <div class="blog-grid" id="blogGrid"></div>
+
+    <div class="empty-state" id="blogBos" style="display:none;">
+        <i class="fas fa-search"></i>
+        <h3>Sonuç Bulunamadı</h3>
+        <p>Arama kriterlerinize uygun yazı bulunamadı.<br>Farklı bir anahtar kelime deneyin.</p>
+    </div>
+
     <footer class="footer">
         <div class="footer-content">
             <a href="../index.html" class="logo">Ali Fet</a>
@@ -147,10 +131,192 @@
                 <a href="blog.html">Blog</a>
                 <a href="iletisim.html">İletişim</a>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.5;">© 2024 Ali Fet. Tüm hakları saklıdır.</p>
+            <p style="margin-top:2rem;opacity:0.5;">© 2024 Ali Fet. Tüm hakları saklıdır.</p>
         </div>
     </footer>
-    
+
     <script src="../assets/js/main.js"></script>
+    <script>
+    /* ================================================================
+       blog.html — Arama + Kategori Filtreleme (tamamen statik JS)
+    ================================================================ */
+
+    var BLOG_YAZILARI = [
+        {
+            id: 1,
+            baslik: 'React Hooks: useState ve useEffect Rehberi',
+            ozet: 'React\'ın en önemli hook\'larını detaylı örneklerle öğrenin. Fonksiyonel componentlerde state yönetimi nasıl yapılır?',
+            tarih: '15 Ocak 2024',
+            okuma: '5 dk',
+            kat: 'javascript',
+            renk: 'linear-gradient(135deg,#6c5ce7,#a29bfe)',
+            ikon: 'fas fa-atom'
+        },
+        {
+            id: 2,
+            baslik: 'MongoDB vs PostgreSQL: Hangisini Seçmeli?',
+            ozet: 'NoSQL ve SQL veritabanlarının ayrıntılı karşılaştırması. Proje gereksinimlerinize göre doğru veritabanı nasıl seçilir?',
+            tarih: '10 Ocak 2024',
+            okuma: '8 dk',
+            kat: 'veritabani',
+            renk: 'linear-gradient(135deg,#00cec9,#81ecec)',
+            ikon: 'fas fa-database'
+        },
+        {
+            id: 3,
+            baslik: 'Git ile Etkili Versiyon Kontrolü',
+            ozet: 'Branch stratejileri, merge conflict çözümü ve ekip çalışması için Git best practice\'leri.',
+            tarih: '5 Ocak 2024',
+            okuma: '6 dk',
+            kat: 'araclar',
+            renk: 'linear-gradient(135deg,#fd79a8,#fab1a0)',
+            ikon: 'fas fa-code-branch'
+        },
+        {
+            id: 4,
+            baslik: 'Modern JavaScript: ES6+ Özellikleri',
+            ozet: 'Arrow functions, destructuring, spread operator ve async/await gibi modern JavaScript özelliklerini keşfedin.',
+            tarih: '28 Aralık 2023',
+            okuma: '7 dk',
+            kat: 'javascript',
+            renk: 'linear-gradient(135deg,#fdcb6e,#f39c12)',
+            ikon: 'fab fa-js-square'
+        },
+        {
+            id: 5,
+            baslik: 'RESTful API Tasarım Prensipleri',
+            ozet: 'Temiz, ölçeklenebilir ve kullanımı kolay API\'ler tasarlamak için izlenmesi gereken kurallar ve örnekler.',
+            tarih: '20 Aralık 2023',
+            okuma: '10 dk',
+            kat: 'backend',
+            renk: 'linear-gradient(135deg,#74b9ff,#0984e3)',
+            ikon: 'fas fa-server'
+        },
+        {
+            id: 6,
+            baslik: 'Responsive Design: Mobile-First Yaklaşımı',
+            ozet: 'Mobil öncelikli tasarım stratejileri, media queries, flexbox ve CSS grid kullanımının temelleri.',
+            tarih: '15 Aralık 2023',
+            okuma: '5 dk',
+            kat: 'tasarim',
+            renk: 'linear-gradient(135deg,#55efc4,#00b894)',
+            ikon: 'fas fa-mobile-alt'
+        },
+        {
+            id: 7,
+            baslik: 'PHP ile Güvenli Kullanıcı Kimlik Doğrulama',
+            ozet: 'bcrypt şifreleme, session yönetimi ve SQL injection önleme teknikleriyle güvenli auth sistemi kurma.',
+            tarih: '5 Aralık 2023',
+            okuma: '9 dk',
+            kat: 'backend',
+            renk: 'linear-gradient(135deg,#a29bfe,#6c5ce7)',
+            ikon: 'fas fa-shield-alt'
+        },
+        {
+            id: 8,
+            baslik: 'MySQL Performans İpuçları ve İndeksleme',
+            ozet: 'Sorgu optimizasyonu, doğru indeks kullanımı ve yavaş sorguları tespit edip hızlandırma yöntemleri.',
+            tarih: '28 Kasım 2023',
+            okuma: '11 dk',
+            kat: 'veritabani',
+            renk: 'linear-gradient(135deg,#81ecec,#00cec9)',
+            ikon: 'fas fa-tachometer-alt'
+        }
+    ];
+
+    var katAdlari = {
+        javascript: 'JavaScript',
+        backend:    'Backend',
+        veritabani: 'Veritabanı',
+        araclar:    'Araçlar',
+        tasarim:    'Tasarım'
+    };
+
+    var aktifKat = 'tumu';
+    var aramaStr = '';
+
+    // ── Filtrele ve Göster ───────────────────────────────────────────
+    function blogFiltrele() {
+        var liste = BLOG_YAZILARI.slice();
+
+        if (aktifKat !== 'tumu') {
+            liste = liste.filter(function (y) { return y.kat === aktifKat; });
+        }
+
+        if (aramaStr !== '') {
+            var q = aramaStr.toLowerCase();
+            liste = liste.filter(function (y) {
+                return y.baslik.toLowerCase().includes(q) || y.ozet.toLowerCase().includes(q);
+            });
+        }
+
+        blogGoster(liste);
+    }
+
+    function blogGoster(liste) {
+        var grid   = document.getElementById('blogGrid');
+        var bos    = document.getElementById('blogBos');
+        var sonuc  = document.getElementById('blogSonuc');
+
+        sonuc.textContent = liste.length + ' yazı gösteriliyor';
+
+        if (liste.length === 0) {
+            grid.innerHTML = '';
+            bos.style.display = 'block';
+            return;
+        }
+        bos.style.display = 'none';
+
+        grid.innerHTML = liste.map(function (y) {
+            return [
+                '<article class="blog-card fade-in">',
+                    '<div class="blog-image" style="background:' + y.renk + '">',
+                        '<i class="' + y.ikon + '"></i>',
+                    '</div>',
+                    '<div class="blog-content">',
+                        '<span class="kat-badge">' + (katAdlari[y.kat] || y.kat) + '</span>',
+                        '<div class="blog-meta">',
+                            '<span><i class="far fa-calendar"></i> ' + y.tarih + '</span>',
+                            '<span><i class="far fa-clock"></i> ' + y.okuma + ' okuma</span>',
+                        '</div>',
+                        '<h3>' + y.baslik + '</h3>',
+                        '<p>' + y.ozet + '</p>',
+                        '<span class="read-more" style="opacity:0.5;cursor:default;">',
+                            'Yazı yakında <i class="fas fa-clock"></i>',
+                        '</span>',
+                    '</div>',
+                '</article>'
+            ].join('');
+        }).join('');
+
+        if (typeof scrollAnimasyon === 'function') scrollAnimasyon();
+    }
+
+    // ── Kategori Butonları ────────────────────────────────────────────
+    document.getElementById('blogKategori').addEventListener('click', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+        document.querySelectorAll('#blogKategori button').forEach(function (b) {
+            b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        aktifKat = btn.dataset.kat;
+        blogFiltrele();
+    });
+
+    // ── Arama Kutusu (debounce) ───────────────────────────────────────
+    var aramaTimer;
+    document.getElementById('blogArama').addEventListener('input', function (e) {
+        clearTimeout(aramaTimer);
+        var deger = e.target.value;
+        aramaTimer = setTimeout(function () {
+            aramaStr = deger.trim();
+            blogFiltrele();
+        }, 280);
+    });
+
+    // İlk yükleme
+    blogFiltrele();
+    </script>
 </body>
 </html>
