@@ -4,20 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeler | Ali Fet</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .filter-bar {
+            max-width: 1200px;
+            margin: 2rem auto 1.5rem;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        .search-box { flex: 1; min-width: 220px; position: relative; }
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.8rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        .search-box input::placeholder { opacity: 0.45; }
+        .search-box i { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); opacity: 0.45; pointer-events:none; }
+
+        .filter-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-cats button {
+            padding: 0.45rem 1.15rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: transparent;
+            color: var(--light);
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.22s;
+        }
+        .filter-cats button:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-cats button.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        .sort-select {
+            padding: 0.65rem 1rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .sort-select:focus { outline: none; border-color: var(--primary); }
+        .sort-select option { background: #2d3436; color: #dfe6e9; }
+
+        .result-count {
+            max-width: 1200px; margin: 0 auto 0.5rem; padding: 0 2rem;
+            font-size: 0.88rem; opacity: 0.5;
+        }
+
+        .empty-state {
+            text-align: center; padding: 4rem 2rem; opacity: 0.55;
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        .kat-badge {
+            font-size: 0.75rem;
+            background: rgba(108,92,231,0.2);
+            color: var(--primary);
+            padding: 0.18rem 0.65rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Proje ekleme formu (DB desteği olanlar için) */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65); z-index: 2000;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: #2d3436; border-radius: 16px; padding: 2rem;
+            width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-box h3 { margin-bottom: 1.5rem; }
+        .modal-box .fg { margin-bottom: 1rem; }
+        .modal-box label { display: block; margin-bottom: 0.35rem; font-size: 0.85rem; opacity: 0.75; }
+        .modal-box input, .modal-box textarea, .modal-box select {
+            width: 100%; padding: 0.65rem 0.9rem;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; color: var(--light); font-size: 0.9rem;
+        }
+        .modal-box textarea { min-height: 80px; resize: vertical; }
+        .modal-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+        .btn-iptal {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light); padding: 0.65rem 1.3rem; border-radius: 10px;
+            cursor: pointer; font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="preloader">
-        <div class="loader"></div>
-    </div>
-    
+    <div class="preloader"><div class="loader"></div></div>
     <div class="particles"></div>
-    
+
     <nav class="navbar">
         <a href="../index.html" class="logo">Ali Fet</a>
-        
         <ul class="nav-links">
             <li><a href="../index.html">Anasayfa</a></li>
             <li><a href="hakkimda.html">Hakkımda</a></li>
@@ -25,145 +121,82 @@
             <li><a href="blog.html">Blog</a></li>
             <li><a href="iletisim.html">İletişim</a></li>
         </ul>
-        
         <div class="nav-right">
             <a href="giris.html" class="btn btn-outline">Giriş Yap</a>
             <a href="kayit.html" class="btn btn-primary">Kayıt Ol</a>
             <a href="iletisim.html" class="btn btn-secondary">İletişime Geç</a>
         </div>
-        
-        <div class="mobile-menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
     </nav>
-    
+
     <header class="page-header">
         <h1>Projelerim</h1>
         <p>Geliştirdiğim projeler ve çalışmalarım</p>
     </header>
-    
-    <div class="projects-grid">
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
-                <i class="fas fa-shopping-cart"></i>
-            </div>
-            <div class="project-info">
-                <h3>E-Ticaret Platformu</h3>
-                <p>Tam özellikli e-ticaret sitesi. Ürün yönetimi, sepet, ödeme entegrasyonu ve admin paneli içerir.</p>
-                <div class="project-tech">
-                    <span>React</span>
-                    <span>Node.js</span>
-                    <span>MongoDB</span>
-                    <span>Stripe</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
-            </div>
+
+    <!-- Filtre Araç Çubuğu -->
+    <div class="filter-bar">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="aramaInput" placeholder="Proje ara... (isim veya teknoloji)">
         </div>
-        
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #00cec9, #81ecec);">
-                <i class="fas fa-tasks"></i>
-            </div>
-            <div class="project-info">
-                <h3>Proje Yönetim Aracı</h3>
-                <p>Kanban board, takvim, ekip yönetimi ve gerçek zamanlı bildirimler ile tam kapsamlı proje takip sistemi.</p>
-                <div class="project-tech">
-                    <span>Vue.js</span>
-                    <span>Firebase</span>
-                    <span>Vuetify</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
-            </div>
+        <div class="filter-cats" id="kategoriFiltre">
+            <button class="active" data-kat="tumu">Tümü</button>
+            <button data-kat="web">Web</button>
+            <button data-kat="mobil">Mobil</button>
+            <button data-kat="uygulama">Uygulama</button>
+            <button data-kat="yapay-zeka">Yapay Zeka</button>
         </div>
-        
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #fd79a8, #fab1a0);">
-                <i class="fas fa-robot"></i>
+        <select id="siralamaSec" class="sort-select">
+            <option value="varsayilan">Varsayılan Sıra</option>
+            <option value="a-z">İsim A → Z</option>
+            <option value="z-a">İsim Z → A</option>
+        </select>
+    </div>
+
+    <div class="result-count" id="sonucSayisi"></div>
+
+    <!-- Proje ekleme butonu — sadece PHP aktifse çalışır, gizli başlar -->
+    <div style="max-width:1200px;margin:0 auto;padding:0 2rem;display:none;" id="adminPanel">
+        <button class="btn btn-primary" style="margin-bottom:1.5rem;" onclick="modalAc()">
+            <i class="fas fa-plus"></i> Yeni Proje Ekle
+        </button>
+    </div>
+
+    <div class="projects-grid" id="projelerGrid"></div>
+
+    <div class="empty-state" id="bosState" style="display:none;">
+        <i class="fas fa-search"></i>
+        <h3>Sonuç Bulunamadı</h3>
+        <p>Arama kriterlerinize uygun proje bulunamadı.<br>Farklı bir anahtar kelime veya kategori deneyin.</p>
+    </div>
+
+    <!-- Proje Ekleme/Düzenleme Modal (PHP destekli sunucular için) -->
+    <div class="modal-overlay" id="projeModal">
+        <div class="modal-box">
+            <h3 id="modalBaslik"><i class="fas fa-plus-circle"></i> Yeni Proje Ekle</h3>
+            <input type="hidden" id="duzenleId">
+            <div class="fg"><label>Başlık *</label><input type="text" id="mBaslik" placeholder="Proje başlığı"></div>
+            <div class="fg"><label>Açıklama *</label><textarea id="mAciklama" placeholder="Kısa açıklama..."></textarea></div>
+            <div class="fg">
+                <label>Kategori</label>
+                <select id="mKategori">
+                    <option value="web">Web</option>
+                    <option value="mobil">Mobil</option>
+                    <option value="uygulama">Uygulama</option>
+                    <option value="yapay-zeka">Yapay Zeka</option>
+                </select>
             </div>
-            <div class="project-info">
-                <h3>AI Chatbot Asistanı</h3>
-                <p>Doğal dil işleme kullanan akıllı chatbot. Müşteri hizmetleri ve SSS yanıtlama için optimize edildi.</p>
-                <div class="project-tech">
-                    <span>Python</span>
-                    <span>TensorFlow</span>
-                    <span>FastAPI</span>
-                    <span>NLP</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #fdcb6e, #f39c12);">
-                <i class="fas fa-cloud-sun"></i>
-            </div>
-            <div class="project-info">
-                <h3>Hava Durumu Uygulaması</h3>
-                <p>Gerçek zamanlı hava durumu verileri, 7 günlük tahmin ve konum bazlı otomatik güncelleme.</p>
-                <div class="project-tech">
-                    <span>React Native</span>
-                    <span>OpenWeather API</span>
-                    <span>Expo</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #74b9ff, #0984e3);">
-                <i class="fas fa-blog"></i>
-            </div>
-            <div class="project-info">
-                <h3>Blog Platformu</h3>
-                <p>Markdown desteği, yorum sistemi, etiketleme ve SEO optimizasyonu ile modern blog platformu.</p>
-                <div class="project-tech">
-                    <span>Next.js</span>
-                    <span>Prisma</span>
-                    <span>PostgreSQL</span>
-                    <span>Tailwind</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="project-card">
-            <div class="project-image" style="background: linear-gradient(135deg, #55efc4, #00b894);">
-                <i class="fas fa-wallet"></i>
-            </div>
-            <div class="project-info">
-                <h3>Bütçe Takip Uygulaması</h3>
-                <p>Gelir-gider takibi, kategori bazlı raporlama, grafikler ve finansal hedef belirleme özellikleri.</p>
-                <div class="project-tech">
-                    <span>Flutter</span>
-                    <span>Dart</span>
-                    <span>SQLite</span>
-                    <span>Charts</span>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="btn-demo">Demo</a>
-                    <a href="#" class="btn-code">GitHub</a>
-                </div>
+            <div class="fg"><label>Teknolojiler (virgülle)</label><input type="text" id="mTek" placeholder="React, Node.js, MongoDB"></div>
+            <div class="fg"><label>Demo URL</label><input type="text" id="mDemo" placeholder="https://..."></div>
+            <div class="fg"><label>GitHub URL</label><input type="text" id="mGithub" placeholder="https://github.com/..."></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="projeKaydet()"><i class="fas fa-save"></i> Kaydet</button>
+                <button class="btn-iptal" onclick="modalKapat()">İptal</button>
             </div>
         </div>
     </div>
-    
+
     <footer class="footer">
         <div class="footer-content">
             <a href="../index.html" class="logo">Ali Fet</a>
@@ -175,10 +208,323 @@
                 <a href="blog.html">Blog</a>
                 <a href="iletisim.html">İletişim</a>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.5;">© 2024 Ali Fet. Tüm hakları saklıdır.</p>
+            <p style="margin-top:2rem;opacity:0.5;">© 2024 Ali Fet. Tüm hakları saklıdır.</p>
         </div>
     </footer>
-    
+
     <script src="../assets/js/main.js"></script>
+    <script>
+    /* ================================================================
+       projeler.html — Tam bağımsız çalışır (PHP olmadan da)
+       PHP varsa DB'den çeker, yoksa statik verilerle devam eder.
+    ================================================================ */
+
+    // ── Statik Veri (her zaman hazır) ────────────────────────────────
+    const STATIK_PROJELER = [
+        {
+            id: 1,
+            baslik: 'E-Ticaret Platformu',
+            aciklama: 'Tam özellikli e-ticaret sitesi. Ürün yönetimi, sepet, ödeme entegrasyonu ve admin paneli içerir.',
+            kategori: 'web',
+            teknolojiler: 'React,Node.js,MongoDB,Stripe',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#6c5ce7,#a29bfe)',
+            ikon: 'fas fa-shopping-cart'
+        },
+        {
+            id: 2,
+            baslik: 'Proje Yönetim Aracı',
+            aciklama: 'Kanban board, takvim, ekip yönetimi ve gerçek zamanlı bildirimler ile tam kapsamlı proje takip sistemi.',
+            kategori: 'uygulama',
+            teknolojiler: 'Vue.js,Firebase,Vuetify',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#00cec9,#81ecec)',
+            ikon: 'fas fa-tasks'
+        },
+        {
+            id: 3,
+            baslik: 'AI Chatbot Asistanı',
+            aciklama: 'Doğal dil işleme kullanan akıllı chatbot. Müşteri hizmetleri ve SSS yanıtlama için optimize edildi.',
+            kategori: 'yapay-zeka',
+            teknolojiler: 'Python,TensorFlow,FastAPI,NLP',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#fd79a8,#fab1a0)',
+            ikon: 'fas fa-robot'
+        },
+        {
+            id: 4,
+            baslik: 'Hava Durumu Uygulaması',
+            aciklama: 'Gerçek zamanlı hava durumu verileri, 7 günlük tahmin ve konum bazlı otomatik güncelleme.',
+            kategori: 'mobil',
+            teknolojiler: 'React Native,OpenWeather API,Expo',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#fdcb6e,#f39c12)',
+            ikon: 'fas fa-cloud-sun'
+        },
+        {
+            id: 5,
+            baslik: 'Blog Platformu',
+            aciklama: 'Markdown desteği, yorum sistemi, etiketleme ve SEO optimizasyonu ile modern blog platformu.',
+            kategori: 'web',
+            teknolojiler: 'Next.js,Prisma,PostgreSQL,Tailwind',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#74b9ff,#0984e3)',
+            ikon: 'fas fa-blog'
+        },
+        {
+            id: 6,
+            baslik: 'Bütçe Takip Uygulaması',
+            aciklama: 'Gelir-gider takibi, kategori bazlı raporlama, grafikler ve finansal hedef belirleme özellikleri.',
+            kategori: 'mobil',
+            teknolojiler: 'Flutter,Dart,SQLite,Charts',
+            demo_url: '',
+            github_url: '',
+            gorsel_renk: 'linear-gradient(135deg,#55efc4,#00b894)',
+            ikon: 'fas fa-wallet'
+        }
+    ];
+
+    // ── Durum Değişkenleri ────────────────────────────────────────────
+    let tumProjeler   = [...STATIK_PROJELER]; // DB'den gelirse güncellenir
+    let aktifKat      = 'tumu';
+    let aramaMetni    = '';
+    let siralama      = 'varsayilan';
+    let phpMevcut     = false; // PHP sunucusu var mı?
+
+    // ── Sayfa Yüklenince ─────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', function () {
+        phpDeneThenGoster();
+        olaylariBagla();
+    });
+
+    // PHP'yi dene, başarısızsa statik veriyle devam et
+    function phpDeneThenGoster() {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 1500); // 1.5sn timeout
+
+        fetch('../backend/php/projeler.php?action=listele', { signal: controller.signal })
+            .then(function (res) {
+                clearTimeout(timeout);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(function (data) {
+                if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+                    phpMevcut = true;
+                    tumProjeler = data.data;
+                }
+                goster();
+                authKontrolAdmin();
+            })
+            .catch(function () {
+                clearTimeout(timeout);
+                // PHP yok veya hata — statik veriyle devam
+                goster();
+            });
+    }
+
+    // Admin panel kontrolü (sadece PHP aktifse anlamlı)
+    function authKontrolAdmin() {
+        if (!phpMevcut) return;
+        fetch('../backend/php/auth.php?action=kontrol')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.giris_yapti) {
+                    document.getElementById('adminPanel').style.display = 'block';
+                }
+            })
+            .catch(function () {});
+    }
+
+    // ── Filtre + Sırala + Ara → Listeyi Hesapla ──────────────────────
+    function hesaplaListe() {
+        let liste = tumProjeler.slice(); // kopya al
+
+        // 1. Kategori filtresi
+        if (aktifKat !== 'tumu') {
+            liste = liste.filter(function (p) { return p.kategori === aktifKat; });
+        }
+
+        // 2. Arama filtresi
+        if (aramaMetni !== '') {
+            var q = aramaMetni.toLowerCase();
+            liste = liste.filter(function (p) {
+                return (
+                    (p.baslik || '').toLowerCase().includes(q) ||
+                    (p.aciklama || '').toLowerCase().includes(q) ||
+                    (p.teknolojiler || '').toLowerCase().includes(q)
+                );
+            });
+        }
+
+        // 3. Sıralama
+        if (siralama === 'a-z') {
+            liste.sort(function (a, b) { return a.baslik.localeCompare(b.baslik, 'tr'); });
+        } else if (siralama === 'z-a') {
+            liste.sort(function (a, b) { return b.baslik.localeCompare(a.baslik, 'tr'); });
+        }
+
+        return liste;
+    }
+
+    // ── Ekrana Yaz ───────────────────────────────────────────────────
+    function goster() {
+        var liste = hesaplaListe();
+        var grid  = document.getElementById('projelerGrid');
+        var bos   = document.getElementById('bosState');
+        var sayac = document.getElementById('sonucSayisi');
+
+        sayac.textContent = liste.length + ' proje gösteriliyor';
+
+        if (liste.length === 0) {
+            grid.innerHTML = '';
+            bos.style.display = 'block';
+            return;
+        }
+        bos.style.display = 'none';
+
+        grid.innerHTML = liste.map(function (p) {
+            var teknolojiBadgeleri = (p.teknolojiler || '')
+                .split(',')
+                .filter(function (t) { return t.trim() !== ''; })
+                .map(function (t) { return '<span>' + guvenli(t.trim()) + '</span>'; })
+                .join('');
+
+            var demoBtn = (p.demo_url && p.demo_url !== '#' && p.demo_url !== '')
+                ? '<a href="' + p.demo_url + '" target="_blank" rel="noopener" class="btn-demo">Demo</a>'
+                : '';
+            var githubBtn = (p.github_url && p.github_url !== '#' && p.github_url !== '')
+                ? '<a href="' + p.github_url + '" target="_blank" rel="noopener" class="btn-code"><i class="fab fa-github"></i> GitHub</a>'
+                : '';
+
+            return [
+                '<div class="project-card fade-in">',
+                    '<div class="project-image" style="background:' + (p.gorsel_renk || 'linear-gradient(135deg,#6c5ce7,#a29bfe)') + '">',
+                        '<i class="' + (p.ikon || 'fas fa-code') + '"></i>',
+                    '</div>',
+                    '<div class="project-info">',
+                        '<span class="kat-badge">' + katAdi(p.kategori) + '</span>',
+                        '<h3>' + guvenli(p.baslik) + '</h3>',
+                        '<p>' + guvenli(p.aciklama) + '</p>',
+                        '<div class="project-tech">' + teknolojiBadgeleri + '</div>',
+                        (demoBtn || githubBtn)
+                            ? '<div class="project-links" style="margin-top:1rem;display:flex;gap:0.6rem;flex-wrap:wrap;">' + demoBtn + githubBtn + '</div>'
+                            : '',
+                    '</div>',
+                '</div>'
+            ].join('');
+        }).join('');
+
+        // Scroll animasyonu tetikle (main.js içinde tanımlı)
+        if (typeof scrollAnimasyon === 'function') scrollAnimasyon();
+    }
+
+    function katAdi(k) {
+        var map = { web: 'Web', mobil: 'Mobil', uygulama: 'Uygulama', 'yapay-zeka': 'Yapay Zeka' };
+        return map[k] || (k ? k.charAt(0).toUpperCase() + k.slice(1) : 'Diğer');
+    }
+
+    function guvenli(s) {
+        return String(s || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    // ── Olayları Bağla ────────────────────────────────────────────────
+    function olaylariBagla() {
+        // Kategori butonları
+        document.getElementById('kategoriFiltre').addEventListener('click', function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            document.querySelectorAll('#kategoriFiltre button').forEach(function (b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            aktifKat = btn.dataset.kat;
+            goster();
+        });
+
+        // Arama kutusu (debounce)
+        var aramaTimer;
+        document.getElementById('aramaInput').addEventListener('input', function (e) {
+            clearTimeout(aramaTimer);
+            var deger = e.target.value;
+            aramaTimer = setTimeout(function () {
+                aramaMetni = deger.trim();
+                goster();
+            }, 280);
+        });
+
+        // Sıralama
+        document.getElementById('siralamaSec').addEventListener('change', function (e) {
+            siralama = e.target.value;
+            goster();
+        });
+
+        // Modal dışına tıkla → kapat
+        document.getElementById('projeModal').addEventListener('click', function (e) {
+            if (e.target === this) modalKapat();
+        });
+    }
+
+    // ── Modal: Proje Ekle (PHP destekli sunucular için) ───────────────
+    function modalAc() {
+        document.getElementById('modalBaslik').innerHTML = '<i class="fas fa-plus-circle"></i> Yeni Proje Ekle';
+        document.getElementById('duzenleId').value = '';
+        ['mBaslik', 'mAciklama', 'mTek', 'mDemo', 'mGithub'].forEach(function (id) {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('mKategori').value = 'web';
+        document.getElementById('projeModal').classList.add('open');
+    }
+
+    function modalKapat() {
+        document.getElementById('projeModal').classList.remove('open');
+    }
+
+    function projeKaydet() {
+        var baslik   = document.getElementById('mBaslik').value.trim();
+        var aciklama = document.getElementById('mAciklama').value.trim();
+        if (!baslik || !aciklama) {
+            if (typeof bildirimGoster === 'function') bildirimGoster('Başlık ve açıklama zorunludur!', 'error');
+            return;
+        }
+
+        var id     = document.getElementById('duzenleId').value;
+        var action = id ? 'guncelle' : 'ekle';
+        var body   = new URLSearchParams({
+            action:       action,
+            id:           id,
+            baslik:       baslik,
+            aciklama:     aciklama,
+            kategori:     document.getElementById('mKategori').value,
+            teknolojiler: document.getElementById('mTek').value,
+            demo_url:     document.getElementById('mDemo').value || '',
+            github_url:   document.getElementById('mGithub').value || '',
+        });
+
+        fetch('../backend/php/projeler.php', { method: 'POST', body: body })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success) {
+                    if (typeof bildirimGoster === 'function') bildirimGoster(d.message, 'success');
+                    modalKapat();
+                    phpDeneThenGoster();
+                } else {
+                    if (typeof bildirimGoster === 'function') bildirimGoster(d.message, 'error');
+                }
+            })
+            .catch(function () {
+                if (typeof bildirimGoster === 'function') bildirimGoster('Sunucu bağlantısı yok.', 'error');
+            });
+    }
+    </script>
 </body>
 </html>
